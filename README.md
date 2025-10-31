@@ -84,7 +84,7 @@ Think carefully about the functions of given websites, and please note that the 
 After setting up the environment, you can start running WebVoyager. 
 
  1. Copy the examples you want to test into `data/tasks_test.jsonl`. For Booking and Google Flights tasks, please manually update the date in the task if it is outdated.
- 2. Modify the api_key in `run.sh` 
+ 2. Modify the api_key (and base_url if needed) in `run.sh` 
 
 You can run WebVoyager with the following command:
 ```bash 
@@ -97,6 +97,7 @@ The details of `run.sh`:
 nohup python -u run.py \
     --test_file ./data/tasks_test.jsonl \
     --api_key YOUR_OPENAI_API_KEY \
+    --base_url YOUR_CUSTOM_BASE_URL \
     --headless \
     --max_iter 15 \
     --max_attached_imgs 3 \
@@ -127,6 +128,7 @@ General:
 - `--test_file`: The task file to be evaluated. Please refer to the format of the data file in the `data`.
 - `--max_iter`: The maximum number of online interactions for each task. Exceeding max_iter without completing the task means failure.
 - `--api_key`: Your OpenAI API key.
+- `--base_url`: Custom OpenAI API base URL (optional). If not specified, uses OpenAI's default base URL.
 - `--output_dir`: We should save the trajectory of the web browsing.
 - `--download_dir`: Sometimes Agent downloads PDF files for analysis.
 
@@ -177,11 +179,12 @@ You can perform auto evaluation by executing `evaluation/run_eval.sh`.
 #!/bin/bash
 nohup python -u auto_eval.py \
     --api_key YOUR_OPENAI_API_KEY \
+    --base_url YOUR_CUSTOM_BASE_URL \
     --process_dir ../results/examples \
     --max_attached_imgs 15 > evaluation.log &
 ```
 
-Please update the `api_key` and `process_dir` in the above script and then run the following command.
+Please update the `api_key` (and `base_url` if needed) and `process_dir` in the above script and then run the following command.
 ```bash
 cd evaluation
 bash run_eval.sh

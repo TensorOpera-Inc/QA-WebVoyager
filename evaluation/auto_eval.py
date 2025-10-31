@@ -139,10 +139,14 @@ def main():
     parser.add_argument('--lesson_dir', type=str, default='results')
     parser.add_argument("--api_key", default="key", type=str, help="YOUR_OPENAI_API_KEY")
     parser.add_argument("--api_model", default="gpt-4-vision-preview", type=str, help="api model name")
+    parser.add_argument("--base_url", default=None, type=str, help="Custom OpenAI API base URL")
     parser.add_argument("--max_attached_imgs", type=int, default=1)
     args = parser.parse_args()
 
-    client = OpenAI(api_key=args.api_key)
+    client_kwargs = {"api_key": args.api_key}
+    if args.base_url:
+        client_kwargs["base_url"] = args.base_url
+    client = OpenAI(**client_kwargs)
     webs = ['Allrecipes', 'Amazon', 'Apple', 'ArXiv', 'BBC News', 'Booking', 'Cambridge Dictionary',
             'Coursera', 'ESPN', 'GitHub', 'Google Flights', 'Google Map', 'Google Search', 'Huggingface', 'Wolfram Alpha']
 

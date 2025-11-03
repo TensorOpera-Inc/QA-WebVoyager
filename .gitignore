@@ -5,5 +5,5 @@ test_code.py
 __pycache__
 .env
 tmp/
-results/
+results/202*
 venv/

@@ -1,0 +1,63 @@
+[
+  {
+    "role": "system",
+    "content": "Imagine you are a robot browsing the web, just like humans. Now you need to complete a task. In each iteration, you will receive an Observation that includes a screenshot of a webpage and some texts. This screenshot will feature Numerical Labels placed in the TOP LEFT corner of each Web Element.\nCarefully analyze the visual information to identify the Numerical Label corresponding to the Web Element that requires interaction, then follow the guidelines and choose one of the following actions:\n1. Click a Web Element.\n2. Delete existing content in a textbox and then type content. \n3. Scroll up or down. Multiple scrolls are allowed to browse the webpage. Pay attention!! The default scroll is the whole window. If the scroll widget is located in a certain area of the webpage, then you have to specify a Web Element in that area. I would hover the mouse there and then scroll.\n4. Wait. Typically used to wait for unfinished webpage processes, with a duration of 5 seconds.\n5. Go back, returning to the previous webpage.\n6. Google, directly jump to the Google search page. When you can't find information in some websites, try starting over with Google.\n7. Answer. This action should only be chosen when all questions in the task have been solved.\n\nCorrespondingly, Action should STRICTLY follow the format:\n- Click [Numerical_Label]\n- Type [Numerical_Label]; [Content]\n- Scroll [Numerical_Label or WINDOW]; [up or down]\n- Wait\n- GoBack\n- Google\n- ANSWER; [content]\n\nKey Guidelines You MUST follow:\n* Action guidelines *\n1) To input text, NO need to click textbox first, directly type content. After typing, the system automatically hits `ENTER` key. Sometimes you should click the search button to apply search filters. Try to use simple language when searching.  \n2) You must Distinguish between textbox and search button, don't type content into the button! If no textbox is found, you may need to click the search button first before the textbox is displayed. \n3) Execute only one action per iteration. \n4) STRICTLY Avoid repeating the same action if the webpage remains unchanged. You may have selected the wrong web element or numerical label. Continuous use of the Wait is also NOT allowed.\n5) When a complex Task involves multiple questions or steps, select \"ANSWER\" only at the very end, after addressing all of these questions (steps). Flexibly combine your own abilities with the information in the web page. Double check the formatting requirements in the task when ANSWER. \n* Web Browsing Guidelines *\n1) Don't interact with useless web elements like Login, Sign-in, donation that appear in Webpages. Pay attention to Key Web Elements like search textbox and menu.\n2) Vsit video websites like YouTube is allowed BUT you can't play videos. Clicking to download PDF is allowed and will be analyzed by the Assistant API.\n3) Focus on the numerical labels in the TOP LEFT corner of each rectangle (element). Ensure you don't mix them up with other numbers (e.g. Calendar) on the page.\n4) Focus on the date in task, you must look for results that match the date. It may be necessary to find the correct year, month and day at calendar.\n5) Pay attention to the filter and sort functions on the page, which, combined with scroll, can help you solve conditions like 'highest', 'cheapest', 'lowest', 'earliest', etc. Try your best to find the answer that best fits the task.\n\nYour reply should strictly follow the format:\nThought: {Your brief thoughts (briefly summarize the info that will help ANSWER)}\nAction: {One Action format you choose}\n\nThen the User will provide:\nObservation: {A labeled screenshot Given by User}"
+  },
+  {
+    "role": "user",
+    "content": [
+      {
+        "type": "text",
+        "text": "Now given a task: Go to the CO Chat website, select 'Think' mode and ask 'what is ChainOpera'.  Please interact with https://chat.chainopera.ai and get the answer. \nObservation: please analyze the attached screenshot and give the Thought and Action. I've provided the tag name of each element and the text it contains (if text exists). Note that <textarea> or <input> may be textbox, but not exactly. Please focus more on the screenshot and then refer to the textual information.\n[0]: \"START NOW\";\t[2]: <button> \"\";\t[3]: <button> \"\";\t[4]: <button> \"\";\t[5]: <button> \"Chats\";\t[6]: <button> \"Agent Social NetworkBeta\";\t[7]: <button> \"Discover\";\t[8]: \"Create Agent\";\t[14]: <button> \"Go Pro0xCf48...086D57HY\";\t[15]: <textarea> \"\";\t[16]: <button> \"Super Agent: CoCo\";\t[17]: <button> \"DeepSearch\";\t[18]: <button> \"Think\";\t[19]: \"Show meme coins with recent large purchases.\";\t[20]: \"Identify today's most trending cryptocurrency tokens\";\t[21]: \"List the top 10 tokens by 24h volume.\";\t[22]: \"Current cryptocurrency market trends\";\t[23]: \"Identify crypto investment sentiment shifts.\";\t[24]: \"Compare BTC and ETH price volatility over the past 7 days.\";\t[25]: \"Identify extreme fear moments in crypto market for the last 7 days.\";\t[26]: <button> \"\";"
+      },
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "data:image/png;base64,{b64_img}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The task requires selecting the 'Think' mode on the CO Chat website and asking 'what is ChainOpera'. The screenshot shows various buttons and options, and the 'Think' mode button is labeled as [18]. Once the mode is selected, I need to type the question in the appropriate text area.\n\nAction: Click [18]"
+  },
+  {
+    "role": "user",
+    "content": [
+      {
+        "type": "text",
+        "text": "Observation: please analyze the attached screenshot and give the Thought and Action. I've provided the tag name of each element and the text it contains (if text exists). Note that <textarea> or <input> may be textbox, but not exactly. Please focus more on the screenshot and then refer to the textual information.\n[0]: \"START NOW\";\t[2]: <button> \"\";\t[3]: <button> \"\";\t[4]: <button> \"\";\t[5]: <button> \"Chats\";\t[6]: <button> \"Agent Social NetworkBeta\";\t[7]: <button> \"Discover\";\t[8]: \"Create Agent\";\t[14]: <button> \"Go Pro0xCf48...086D57HY\";\t[15]: <textarea> \"\";\t[16]: <button> \"DeepSearch\";\t[17]: <button> \"Think\";\t[18]: \"Filter tokens with 100M\u20131B market cap and >10% 24h gain. (X not stable)\";\t[19]: \"Identify crypto investment sentiment shifts.\";\t[20]: \"Recommend 10 meme coins.\";\t[21]: \"Identify extreme fear moments in crypto market for the last 7 days.\";\t[22]: \"Which crypto currently show the strongest investment potential?\";\t[23]: <button> \"\";"
+      },
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "data:image/png;base64,{b64_img}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: After selecting the 'Think' mode, the next step is to type the question 'what is ChainOpera' into the appropriate text area. The screenshot shows a text area labeled as [15], which is where the question should be typed.\n\nAction: Type [15]; what is ChainOpera"
+  },
+  {
+    "role": "user",
+    "content": [
+      {
+        "type": "text",
+        "text": "Observation: please analyze the attached screenshot and give the Thought and Action. I've provided the tag name of each element and the text it contains (if text exists). Note that <textarea> or <input> may be textbox, but not exactly. Please focus more on the screenshot and then refer to the textual information.\n[0]: \"START NOW\";\t[2]: <button> \"\";\t[3]: <button> \"\";\t[4]: <button> \"\";\t[5]: <button> \"Chats\";\t[6]: <button> \"Agent Social NetworkBeta\";\t[7]: <button> \"Discover\";\t[8]: \"Create Agent\";\t[14]: <button> \"Go Pro0xCf48...086D57HY\";\t[15]: <button> \"\";\t[16]: <button> \"\";\t[17]: <button> \"Reasoned\";\t[18]: <textarea> \"\";\t[19]: <button> \"DeepSearch\";\t[20]: <button> \"Think\";"
+      },
+      {
+        "type": "image_url",
+        "image_url": {
+          "url": "data:image/png;base64,{b64_img}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "assistant",
+    "content": "Thought: The task has been completed as the question 'what is ChainOpera' has been asked in 'Think' mode, and the response is displayed on the screen. Now, I need to provide the answer based on the information given.\n\nAction: ANSWER; ChainOpera is a platform where users can ask anything, and it utilizes the ChainOpera AI Terminal to provide answers. It can handle various tasks including generating text, images, and managing agents. The system searches the web for information related to the query, processes it, and then compiles the results into an answer."
+  }
+]

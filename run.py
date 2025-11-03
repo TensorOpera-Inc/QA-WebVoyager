@@ -16,6 +16,7 @@ from prompts import SYSTEM_PROMPT, SYSTEM_PROMPT_TEXT_ONLY
 from openai import OpenAI
 from utils import get_web_element_rect, encode_image, extract_information, print_message,\
     get_webarena_accessibility_tree, get_pdf_retrieval_ans_from_assistant, clip_message_and_obs, clip_message_and_obs_text_only
+import wallet
 
 
 def setup_logger(folder_path):
@@ -273,10 +274,12 @@ def main():
         for line in f:
             tasks.append(json.loads(line))
 
+    login_cache = set()  # ("https://chat.chainopera.ai", "https://chat-test.chainopera.ai", ...)
 
     for task_id in range(len(tasks)):
         task = tasks[task_id]
         task_dir = os.path.join(result_dir, 'task{}'.format(task["id"]))
+        need_wallet_login = task.get('wallet', False)
         os.makedirs(task_dir, exist_ok=True)
         setup_logger(task_dir)
         logging.info(f'########## TASK{task["id"]} ##########')
@@ -287,6 +290,39 @@ def main():
         # You can resize to height = 512 by yourself (255 tokens, Maybe bad performance)
         driver_task.set_window_size(args.window_width, args.window_height)  # larger height may contain more web information
         driver_task.get(task['web'])
+
+        if need_wallet_login:
+            if task['web'] not in login_cache:
+                try:
+                    logging.info("Retrieving login cache...")
+                    wallet.main() # login using metamask
+                    login_cache.add(task['web'])
+                except Exception as e:
+                    logging.error(f"Error retrieving login cache: {e}")
+                    raise e
+            
+            logging.info("Adding cookies and localStorage...")
+            # get auth token from user info
+            current_file_path = os.path.abspath(__file__)
+            user_info_path = os.path.join(os.path.dirname(current_file_path), "tmp", "user_info.json")
+            with open(user_info_path, "r", encoding="UTF-8") as f:
+                user_info = json.load(f)
+            auth_token = user_info["state"]["userInfo"]["token"]
+            from urllib.parse import urlparse
+            driver_task.add_cookie({
+                "name": "auth_token",
+                "value": auth_token,
+                "domain": urlparse(task['web']).netloc,
+                "path": "/",
+            })
+            driver_task.execute_script(f"""
+                localStorage.setItem('auth_token', '{auth_token}');
+                localStorage.setItem('app-user-info', '{json.dumps(user_info)}');
+                localStorage.setItem('auth_user_info', '{json.dumps(user_info["state"]["userInfo"])}');
+            """)
+            driver_task.refresh()
+
+        logging.info("interacting with the page...")
         try:
             driver_task.find_element(By.TAG_NAME, 'body').click()
         except:

@@ -3,3 +3,7 @@ downloads/*.pdf
 results/2024*
 test_code.py
 __pycache__
+.env
+tmp/
+results/
+venv/

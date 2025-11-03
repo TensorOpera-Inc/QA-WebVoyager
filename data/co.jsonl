@@ -1,0 +1,3 @@
+{"web_name": "CO Chat", "id": "CO Chat--1", "wallet":true, "ques": "Go to the CO Chat website, switch agent from 'CoCo' to 'ChainOpera-x1' and ask 'who are you'.", "web": "https://chat.chainopera.ai"}
+{"web_name": "CO Chat", "id": "CO Chat--2", "wallet":true, "ques": "Go to the CO Chat website, select 'Think' mode and ask 'what is ChainOpera'.", "web": "https://chat.chainopera.ai"}
+{"web_name": "CO Chat", "id": "CO Chat--3", "wallet":true, "ques": "Go to the CO Chat website, select 'Agent Social Network', create agent group with random 3 agents, and ask 'who are in the group' in the group.", "web": "https://chat.chainopera.ai"}
